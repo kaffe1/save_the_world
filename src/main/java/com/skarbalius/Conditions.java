@@ -119,4 +119,27 @@ public class Conditions
         return false;
     }
 
+    public boolean condition12(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
+        int interv_pts = parameters.K_PTS;
+        if (NUMPOINTS < 3) {
+            return false;
+        }
+
+        boolean found_l1 = false;
+        boolean found_l2 = false;
+
+        for (int i = interv_pts + 1; i < NUMPOINTS; i++) {
+            Point start_point = points.get(i - interv_pts - 1);
+            Point end_point = points.get(i);
+            double distance = start_point.getDistance(end_point);
+            if (!found_l1 && distance > parameters.LENGTH1) {
+                found_l1 = true;
+            }
+            if (!found_l2 && distance < parameters.LENGTH2) {
+                found_l2 = true;
+            }
+        }
+        return found_l1 && found_l2;
+    }
+
 }
