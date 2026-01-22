@@ -1,6 +1,9 @@
-package com.skarbalius;
+package com.skarbalius.conditionTests;
 
-public class TestParameters extends Parameters_T {
+import com.skarbalius.Parameters_T;
+
+public class TestParameters extends Parameters_T
+{
     public TestParameters() {
         // Distance and radius thresholds
         LENGTH1 = 5.0f;
