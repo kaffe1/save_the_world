@@ -104,4 +104,19 @@ public class Conditions
         return false;
     }
 
+    public boolean condition11(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
+        int interv_pts = parameters.G_PTS;
+        if (NUMPOINTS < 3 || interv_pts < 1 || interv_pts > NUMPOINTS - 2) {
+            return false;
+        }
+        for (int i = interv_pts + 1; i < NUMPOINTS; i++) {
+            Point start_point = points.get(i - interv_pts - 1);
+            Point end_point = points.get(i);
+            if (end_point.x - start_point.x < 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
