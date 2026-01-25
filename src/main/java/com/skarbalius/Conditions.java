@@ -164,6 +164,48 @@ public class Conditions
         return false;
     }
 
+    public boolean condition6(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters, double DIST) {
+        
+        if(NUMPOINTS < 3) return false;
+        
+        for(int i = parameters.N_PTS; i <= NUMPOINTS; i++){
+            Point point1 = points.get(i - parameters.N_PTS);
+            Point point2 = points.get(i - 1);
+
+            if(point1.x == point2.x && point1.y == point2.y) {
+                for(int j = i - parameters.N_PTS + 1; j < i - 1; j++) {
+                    Point point3 = points.get(j);
+                    
+                    double dx = point3.x - point1.x;
+                    double dy = point3.y - point1.y;
+                    
+                    double distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if(distance > DIST) {
+                        return true;
+                    }
+                }
+            } 
+            else {
+                double dx = point2.x - point1.x;
+                double dy = point2.y - point1.y;
+
+                double lineDistance = Math.sqrt(dx * dx + dy * dy);
+            
+
+                for(int j = i - parameters.N_PTS + 1; j < i - 1; j++) {
+                    Point point3 = points.get(j);
+                    double dj = Math.abs(((dy * point3.x) - (dx * point3.y) + point2.x*point1.y - point2.y*point1.x)/lineDistance);
+
+                    if(dj > DIST) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean condition10(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
         int num_first_interv_pts = parameters.E_PTS;
         int num_second_interv_pts = parameters.F_PTS;
