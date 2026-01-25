@@ -154,6 +154,16 @@ public class Conditions
         return false;
     }
 
+    public boolean condition5(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
+        for(int i = 0; i < NUMPOINTS - 1; i++) {
+            Point point1 = points.get(i);
+            Point point2 = points.get(i+1);
+
+            if(point2.x - point1.x < 0) return true;
+        }
+        return false;
+    }
+
     public boolean condition10(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
         int num_first_interv_pts = parameters.E_PTS;
         int num_second_interv_pts = parameters.F_PTS;
