@@ -285,5 +285,27 @@ public class Conditions
         return found_s1 && found_s2;
     }
 
+    public boolean condition14(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
+        int first_interv_pts = parameters.E_PTS;
+        int second_interv_pts = parameters.F_PTS;
+        if (NUMPOINTS < 5 || parameters.AREA2 < 0) {
+            return false;
+        }
+        // TODO: Reduce duplication with condition10, 1, 12, 13
+        boolean found_s1 = false;
+        boolean found_s2 = false;
+        for (int i = first_interv_pts + second_interv_pts + 2; i < NUMPOINTS; i++) {
+            Point v1 = points.get(i - second_interv_pts - first_interv_pts - 2);
+            Point v2 = points.get(i - second_interv_pts - 1);
+            Point v3 = points.get(i);
+            if (!found_s1) {
+                found_s1 = Point.getArea(v1, v2, v3) > parameters.AREA1;
+            }
+            if (!found_s2) {
+                found_s2 = Point.getArea(v1, v2, v3) < parameters.AREA2;
+            }
+        }
+        return found_s1 && found_s2;
+    }
 
 }
