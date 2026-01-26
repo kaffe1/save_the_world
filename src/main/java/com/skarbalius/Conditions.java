@@ -222,6 +222,7 @@ public class Conditions
             Point v3 = points.get(i);
 
             // Calculate the area of the triangle with Heron's formula
+            // TODO: Move to GeometricUtils (reuse in condition3)
             double a = v1.getDistance(v2);
             double b = v2.getDistance(v3);
             double c = v3.getDistance(v1);
@@ -272,5 +273,33 @@ public class Conditions
         }
         return found_l1 && found_l2;
     }
+
+    public boolean condition13(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
+        int first_interv_pts = parameters.A_PTS;
+        int second_interv_pts = parameters.B_PTS;
+        if (NUMPOINTS < 5 || parameters.RADIUS2 < 0) {
+            return false;
+        }
+        // TODO: Reduce duplication with condition10, 1 & 12
+        boolean found_s1 = false;
+        boolean found_s2 = false;
+        for (int i = first_interv_pts + second_interv_pts + 2; i < NUMPOINTS; i++) {
+            Point v1 = points.get(i - second_interv_pts - first_interv_pts - 2);
+            Point v2 = points.get(i - second_interv_pts - 1);
+            Point v3 = points.get(i);
+            ArrayList<Point> curr_points = new ArrayList<Point>(Arrays.asList(v1, v2, v3));
+            final Point center = Point.getCentroid(curr_points);
+            if (!found_s1) {
+                found_s1 = curr_points.stream()
+                        .anyMatch(point -> point.getDistance(center) > parameters.RADIUS1);
+            }
+            if (!found_s2) {
+                found_s2 = curr_points.stream()
+                        .allMatch(point -> point.getDistance(center) <= parameters.RADIUS2);
+            }
+        }
+        return found_s1 && found_s2;
+    }
+
 
 }
