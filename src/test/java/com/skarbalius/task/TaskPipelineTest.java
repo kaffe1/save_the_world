@@ -3,12 +3,14 @@ package com.skarbalius.task;
 import com.skarbalius.LIC.Point;
 import com.skarbalius.conditionTests.TestParameters;
 import org.junit.jupiter.api.Test;
+import com.skarbalius.input.BooleanOperator;
+import java.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class TaskPipelineTest {
 
@@ -38,4 +40,51 @@ class TaskPipelineTest {
         assertNotNull(context.fuv);
         assertNotNull(context.decision);
     }
+
+    @Test
+    void testPUMHandler() {
+        TaskContext context = new TaskContext();
+        
+        // Mock CMV data 
+        context.cmv = new Vector<>(15);
+        for (int i = 0; i < 15; i++) context.cmv.add(false); 
+        context.cmv.set(0, true);
+        context.cmv.set(1, false);
+
+        // Mock LCM matrix 
+        context.lcm = new Vector<>(15);
+        for (int i = 0; i < 15; i++) {
+            Vector<BooleanOperator> row = new Vector<>(15);
+            for (int j = 0; j < 15; j++) row.add(BooleanOperator.NOTUSED);
+            context.lcm.add(row);
+        }
+
+        context.lcm.get(0).set(1, BooleanOperator.ANDD); 
+        context.lcm.get(1).set(0, BooleanOperator.ANDD); 
+        context.lcm.get(0).set(2, BooleanOperator.ORR);  
+        context.lcm.get(3).set(4, BooleanOperator.NOTUSED); 
+
+        PUMHandler handler = new PUMHandler();
+        handler.handle(context);
+
+        // --- Assertions to ensure logic matches requirements ---
+        
+        // Verify ANDD logic
+        assertFalse(context.pum.get(0).get(1), "True ANDD False should be False");
+        
+        // Verify ORR logic
+        assertTrue(context.pum.get(0).get(2), "True ORR False should be True");
+        
+        // Verify NOTUSED logic: must be True regardless of CMV values
+        assertTrue(context.pum.get(3).get(4), "NOTUSED should always result in True");
+        
+        // Verify Matrix Symmetry 
+        assertEquals(context.pum.get(0).get(1), context.pum.get(1).get(0), "PUM must be symmetric"); 
+        
+        // Verify Matrix Dimensions (15x15)
+        assertEquals(15, context.pum.size());
+        assertEquals(15, context.pum.get(0).size());
+    }
 }
+
+
