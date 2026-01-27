@@ -1,5 +1,6 @@
 package com.skarbalius.LIC;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import java.util.List;
@@ -65,6 +66,7 @@ public class Point implements Serializable
         (p2.y * p1.x))/lineDistance;
     }
 
+    @JsonIgnore
     public int getQuadrant() {
         double x = this.x;
         double y = this.y;
