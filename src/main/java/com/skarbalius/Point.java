@@ -52,6 +52,35 @@ public class Point
         return Vector2D.angle(v1, v2);
     }
 
+    public double getStraightLineDistance(Point p1, Point p2, double lineDistance) {
+        double dx = p2.x - p1.x;
+        double dy = p2.y - p1.y;
+        
+        return Math.abs(
+        (dy * this.x) -
+        (dx * this.y) +
+        (p2.x * p1.y) -
+        (p2.y * p1.x))/lineDistance;    
+    }
+
+    public int getQuadrant() {
+        double x = this.x;
+        double y = this.y;
+
+        if (x == 0) {
+            return (y >= 0) ? 1 : 3;
+        }
+        if (y == 0) {
+            return (x >= 0) ? 1 : 2;
+        }
+
+        if (x > 0 && y > 0) return 1;
+        if (x < 0 && y > 0) return 2;
+        if (x < 0 && y < 0) return 3;
+        return 4;
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Point p)) {

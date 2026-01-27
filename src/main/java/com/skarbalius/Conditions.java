@@ -94,50 +94,12 @@ public class Conditions
 
     public boolean condition4(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters, int QUADS) {
         for (int i = parameters.Q_PTS; i <= NUMPOINTS; i++) {
-            ArrayList<Integer> quadArray = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+            ArrayList<Double> quadArray = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0));
             int uniqueQuad = 0;
             for (int j = i - parameters.Q_PTS; j < i; j++) {
-                if (points.get(j).x == 0) {
-                    if (points.get(j).y >= 0 && quadArray.contains(1)) {
-                        quadArray.remove(Integer.valueOf(1));
-                        uniqueQuad++;
-                        continue;
-                    }
-                    if (points.get(j).y < 0 && quadArray.contains(3)) {
-                        quadArray.remove(Integer.valueOf(3));
-                        uniqueQuad++;
-                        continue;
-                    }
-                }
-                if (points.get(j).y == 0) {
-                    if (points.get(j).x >= 0 && quadArray.contains(1)) {
-                        quadArray.remove(Integer.valueOf(1));
-                        uniqueQuad++;
-                        continue;
-                    }
-                    if (points.get(j).x < 0 && quadArray.contains(2)) {
-                        quadArray.remove(Integer.valueOf(2));
-                        uniqueQuad++;
-                        continue;
-                    }
-                }
-                if (points.get(j).x > 0 && points.get(j).y > 0 && quadArray.contains(1)) {
-                    quadArray.remove(Integer.valueOf(1));
-                    uniqueQuad++;
-                    continue;
-                }
-                if (points.get(j).x < 0 && points.get(j).y > 0 && quadArray.contains(2)) {
-                    quadArray.remove(Integer.valueOf(2));
-                    uniqueQuad++;
-                    continue;
-                }
-                if (points.get(j).x < 0 && points.get(j).y < 0 && quadArray.contains(3)) {
-                    quadArray.remove(Integer.valueOf(3));
-                    uniqueQuad++;
-                    continue;
-                }
-                if (points.get(j).x > 0 && points.get(j).y < 0 && quadArray.contains(4)) {
-                    quadArray.remove(Integer.valueOf(4));
+                double quad = points.get(j).getQuadrant();
+                if (quadArray.contains(quad)) {
+                    quadArray.remove(quad);
                     uniqueQuad++;
                     continue;
                 }
@@ -159,39 +121,30 @@ public class Conditions
 
     public boolean condition6(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters, double DIST) {
 
-        if (NUMPOINTS < 3) {return false;}
+        if (NUMPOINTS < 3) return false;
 
         for (int i = parameters.N_PTS; i <= NUMPOINTS; i++) {
+            
             Point point1 = points.get(i - parameters.N_PTS);
             Point point2 = points.get(i - 1);
 
             if (point1.x == point2.x && point1.y == point2.y) {
                 for (int j = i - parameters.N_PTS + 1; j < i - 1; j++) {
+                    
                     Point point3 = points.get(j);
-
-                    double dx = point3.x - point1.x;
-                    double dy = point3.y - point1.y;
-
-                    double distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance > DIST) {
-                        return true;
-                    }
+                    double distance = point3.getDistance(point1);
+                    if (distance > DIST) return true;
                 }
             } else {
-                double dx = point2.x - point1.x;
-                double dy = point2.y - point1.y;
-
-                double lineDistance = Math.sqrt(dx * dx + dy * dy);
-
+                
+                double lineDistance = point2.getDistance(point1);
 
                 for (int j = i - parameters.N_PTS + 1; j < i - 1; j++) {
+                    
                     Point point3 = points.get(j);
-                    double dj = Math.abs(((dy * point3.x) - (dx * point3.y) + point2.x * point1.y - point2.y * point1.x) / lineDistance);
+                    double dj = point3.getStraightLineDistance(point1, point2, lineDistance);
 
-                    if (dj > DIST) {
-                        return true;
-                    }
+                    if (dj > DIST) return true;
                 }
             }
         }
@@ -207,10 +160,7 @@ public class Conditions
             Point point1 = points.get(i);
             Point point2 = points.get(i + parameters.K_PTS + 1);
 
-            double dx = point2.x - point1.x;
-            double dy = point2.y - point1.y;
-
-            double distance = Math.sqrt(dx * dx + dy * dy);
+            double distance = point1.getDistance(point2);
 
             if (distance > LENGTH1) {
                 return true;
