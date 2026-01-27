@@ -3,8 +3,9 @@ package com.skarbalius;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import java.util.List;
+import java.io.Serializable;
 
-public class Point
+public class Point implements Serializable
 {
     double x;
     double y;
@@ -13,6 +14,8 @@ public class Point
         this.x = x;
         this.y = y;
     }
+
+    public Point() {}
 
     public static Point getCentroid(List<Point> points) {
         Point center = points.stream().reduce(new Point(0, 0), (acc, p) -> {
@@ -54,12 +57,12 @@ public class Point
     public double getStraightLineDistance(Point p1, Point p2, double lineDistance) {
         double dx = p2.x - p1.x;
         double dy = p2.y - p1.y;
-        
+
         return Math.abs(
         (dy * this.x) -
         (dx * this.y) +
         (p2.x * p1.y) -
-        (p2.y * p1.x))/lineDistance;    
+        (p2.y * p1.x))/lineDistance;
     }
 
     public int getQuadrant() {
@@ -80,12 +83,38 @@ public class Point
 
     }
 
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Point p)) {
             return false;
         }
         return this.x == p.x && this.y == p.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Double.valueOf(x).hashCode() * 31 + Double.valueOf(y).hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Point(" + x + ", " + y + ")";
     }
 }
 
