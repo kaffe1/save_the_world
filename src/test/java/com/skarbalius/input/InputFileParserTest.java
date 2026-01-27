@@ -14,7 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class InputFileParserTest {
 
     private static final InputFileParser PARSER = new InputFileParser();
-    private  static final File resourcesDirectory = new File("src/test/resources");
+    private static final File resourcesDirectory = new File("src/test/resources");
+
+    static {
+        if (!resourcesDirectory.exists()) {
+            resourcesDirectory.mkdirs();
+        }
+    }
 
     @Test
     void write() {
