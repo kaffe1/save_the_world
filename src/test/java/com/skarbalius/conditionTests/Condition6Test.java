@@ -20,9 +20,10 @@ public class Condition6Test {
 
         Parameters_T params = new TestParameters();
         params.N_PTS = 3;
+        params.DIST = 2.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertTrue(conditions.condition6(points, 3, params, 2));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition6(points, params));
     }
 
     @Test
@@ -34,9 +35,10 @@ public class Condition6Test {
 
         Parameters_T params = new TestParameters();
         params.N_PTS = 3;
+        params.DIST = 2.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertFalse(conditions.condition6(points, 3, params, 2));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition6(points, params));
     }
 
     @Test
@@ -48,9 +50,10 @@ public class Condition6Test {
 
         Parameters_T params = new TestParameters();
         params.N_PTS = 3;
+        params.DIST = 3.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertTrue(conditions.condition6(points, 3, params, 3));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition6(points, params));
     }
 
     @Test
@@ -62,9 +65,10 @@ public class Condition6Test {
 
         Parameters_T params = new TestParameters();
         params.N_PTS = 3;
+        params.DIST = 3.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertFalse(conditions.condition6(points, 3, params, 3));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition6(points, params));
     }
 
     @Test
@@ -78,9 +82,10 @@ public class Condition6Test {
 
         Parameters_T params = new TestParameters();
         params.N_PTS = 3;
+        params.DIST = 2.0;
 
-        Conditions conditions = new Conditions(points, 5, params);
-        assertTrue(conditions.condition6(points, 5, params, 2));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition6(points, params));
     }
 
     @Test
@@ -91,8 +96,9 @@ public class Condition6Test {
 
         Parameters_T params = new TestParameters();
         params.N_PTS = 3;
+        params.DIST = 1.0;
 
-        Conditions conditions = new Conditions(points, 2, params);
-        assertFalse(conditions.condition6(points, 2, params, 1));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition6(points, params));
     }
 }

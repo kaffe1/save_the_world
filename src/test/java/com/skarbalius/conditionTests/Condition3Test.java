@@ -22,7 +22,7 @@ public class Condition3Test
         Parameters_T params = new TestParameters();
         params.AREA1 = 40.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
+        Conditions conditions = new Conditions(points, params);
         assertTrue(conditions.condition3(points, params));
     }
 
@@ -36,7 +36,7 @@ public class Condition3Test
         Parameters_T params = new TestParameters();
         params.AREA1 = 5.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
+        Conditions conditions = new Conditions(points, params);
         assertFalse(conditions.condition3(points, params));
     }
 
@@ -50,7 +50,7 @@ public class Condition3Test
         Parameters_T params = new TestParameters();
         params.AREA1 = 0.1; 
 
-        Conditions conditions = new Conditions(points, 3, params);
+        Conditions conditions = new Conditions(points, params);
         assertFalse(conditions.condition3(points, params));
     }
 }

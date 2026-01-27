@@ -11,12 +11,32 @@ public class Conditions
 {
 
     private final Vector<Boolean> cmv;
+    private final ArrayList<Point> points;
+    private final Parameters_T parameters;
 
-    public Conditions(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
+    public Conditions(ArrayList<Point> points, Parameters_T parameters) {
+        this.points = points;
+        this.parameters = parameters;
         cmv = new Vector<>(15);
-        cmv.add(condition0(points, parameters));
-        cmv.add(condition1(points, parameters));
-        cmv.add(condition2(points, parameters));
+        computeCMV();
+    }
+
+    public void computeCMV() {
+        cmv.add(condition0(this.points, this.parameters));
+        cmv.add(condition1(this.points, this.parameters));
+        cmv.add(condition2(this.points, this.parameters));
+        cmv.add(condition3(this.points, this.parameters));
+        cmv.add(condition4(this.points, this.parameters));
+        cmv.add(condition5(this.points, this.parameters));
+        cmv.add(condition6(this.points, this.parameters));
+        cmv.add(condition7(this.points, this.parameters));
+        cmv.add(condition8(this.points, this.parameters));
+        cmv.add(condition9(this.points, this.parameters));
+        cmv.add(condition10(this.points, this.parameters));
+        cmv.add(condition11(this.points, this.parameters));
+        cmv.add(condition12(this.points, this.parameters));
+        cmv.add(condition13(this.points, this.parameters));
+        cmv.add(condition14(this.points, this.parameters));
     }
 
     public Vector<Boolean> getCMV() {
@@ -41,8 +61,11 @@ public class Conditions
         return anyConsecutiveTriple(points, (p1, p2, p3) -> Point.getAreaOfTriangle(p1, p2, p3) > parameters.AREA1);
     }
 
-    public boolean condition4(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters, int QUADS) {
-        for (int i = parameters.Q_PTS; i <= NUMPOINTS; i++) {
+    public boolean condition4(ArrayList<Point> points, Parameters_T parameters) {
+        if (points.size() < 2 || parameters.Q_PTS < 2 || parameters.Q_PTS > points.size() || parameters.QUADS < 1 || parameters.QUADS > 3) {
+            return false;
+        }
+        for (int i = parameters.Q_PTS; i <= points.size(); i++) {
             ArrayList<Double> quadArray = new ArrayList<>(Arrays.asList(1.0, 2.0, 3.0, 4.0));
             int uniqueQuad = 0;
             for (int j = i - parameters.Q_PTS; j < i; j++) {
@@ -50,114 +73,71 @@ public class Conditions
                 if (quadArray.contains(quad)) {
                     quadArray.remove(quad);
                     uniqueQuad++;
-                    continue;
                 }
             }
-            if (uniqueQuad > QUADS) {return true;}
+            if (uniqueQuad > parameters.QUADS) {
+                return true;
+            }
         }
         return false;
     }
 
-    public boolean condition5(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
-        for (int i = 0; i < NUMPOINTS - 1; i++) {
+    public boolean condition5(ArrayList<Point> points, Parameters_T parameters) {
+        for (int i = 0; i < points.size() - 1; i++) {
             Point point1 = points.get(i);
             Point point2 = points.get(i + 1);
 
-            if (point2.x - point1.x < 0) {return true;}
+            if (point2.x - point1.x < 0) return true;
         }
         return false;
     }
 
-    public boolean condition6(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters, double DIST) {
+    public boolean condition6(ArrayList<Point> points, Parameters_T parameters) {
 
-        if (NUMPOINTS < 3) return false;
+        if (points.size() < 3) {return false;}
 
-        for (int i = parameters.N_PTS; i <= NUMPOINTS; i++) {
-            
+        for (int i = parameters.N_PTS; i <= points.size(); i++) {
+
             Point point1 = points.get(i - parameters.N_PTS);
             Point point2 = points.get(i - 1);
 
             if (point1.x == point2.x && point1.y == point2.y) {
                 for (int j = i - parameters.N_PTS + 1; j < i - 1; j++) {
-                    
+
                     Point point3 = points.get(j);
                     double distance = point3.getDistance(point1);
-                    if (distance > DIST) return true;
+                    if (distance > parameters.DIST) {return true;}
                 }
             } else {
-                
+
                 double lineDistance = point2.getDistance(point1);
 
                 for (int j = i - parameters.N_PTS + 1; j < i - 1; j++) {
-                    
+
                     Point point3 = points.get(j);
                     double dj = point3.getStraightLineDistance(point1, point2, lineDistance);
 
-                    if (dj > DIST) return true;
+                    if (dj > parameters.DIST) {return true;}
                 }
             }
         }
         return false;
     }
 
-    public boolean condition7(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters, double LENGTH1) {
-
-        if (NUMPOINTS < 3) { return false; }
-
-        for (int i = 0; i < NUMPOINTS - parameters.K_PTS - 1; i++) {
-
-            Point point1 = points.get(i);
-            Point point2 = points.get(i + parameters.K_PTS + 1);
-
-            double distance = point1.getDistance(point2);
-
-            if (distance > LENGTH1) {
-                return true;
-            }
-        }
-        return false;
+    public boolean condition7(ArrayList<Point> points, Parameters_T parameters) {
+        return anySeparatedPair(points, parameters.K_PTS, (p1, p2) -> p1.getDistance(p2) > parameters.LENGTH1);
     }
 
-    public boolean condition8(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
-        if (NUMPOINTS < 5) { return false; }
-
-        int A_PTS = parameters.A_PTS;
-        int B_PTS = parameters.B_PTS;
-
-        for (int i = 0; i < NUMPOINTS - A_PTS - B_PTS - 2; i++) {
-
-            Point p1 = points.get(i);
-            Point p2 = points.get(i + A_PTS + 1);
-            Point p3 = points.get(i + A_PTS + B_PTS + 2);
-
-            double a = p1.getDistance(p2);
-            double b = p2.getDistance(p3);
-            double c = p3.getDistance(p1);
-
-            double area = Point.getAreaOfTriangle(p1, p2, p3);
-
-            double requiredRadius;
-
-            if (area == 0) {
-                double maxDist = Math.max(a, Math.max(b, c));
-                requiredRadius = maxDist / 2.0;
-            } else {
-                requiredRadius = (a * b * c) / (4.0 * area);
-            }
-
-            if (requiredRadius > parameters.RADIUS1) {
-                return true;
-            }
-        }
-        return false;
+    public boolean condition8(ArrayList<Point> points, Parameters_T parameters) {
+        return anySeparatedTriple(points, parameters.A_PTS, parameters.B_PTS,
+                                  (p1, p2, p3) -> anyOutsideRadiusFromCentroid(p1, p2, p3, parameters.RADIUS1));
     }
 
 
     public boolean condition9(ArrayList<Point> points, Parameters_T parameters) {
-        return anySeparatedTriple(points, parameters.C_PTS, parameters.D_PTS, (v1, v2, v3) -> {
-            double angle = v2.getAngleBetweenNeighbours(v1, v3);
-            return angle < Math.PI - parameters.EPSILON || angle > Math.PI + parameters.EPSILON;
-        }, (v1, v2, v3) -> v2.equals(v1) || v2.equals(v3));
+        return anySeparatedTriple(points, parameters.C_PTS, parameters.D_PTS,
+                                  (p1, p2, p3) -> angleNotWithinEpsilonOfPi(p1, p2, p3, parameters.EPSILON),
+                                  (v1, v2, v3) -> v2.equals(v1) || v2.equals(v3));
     }
 
     public boolean condition10(ArrayList<Point> points, Parameters_T parameters) {
@@ -165,31 +145,20 @@ public class Conditions
                                   (v1, v2, v3) -> Point.getAreaOfTriangle(v1, v2, v3) > parameters.AREA1);
     }
 
-    public boolean condition11(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
-        int interv_pts = parameters.G_PTS;
-        if (NUMPOINTS < 3 || interv_pts < 1 || interv_pts > NUMPOINTS - 2) {
-            return false;
-        }
-        for (int i = interv_pts + 1; i < NUMPOINTS; i++) {
-            Point start_point = points.get(i - interv_pts - 1);
-            Point end_point = points.get(i);
-            if (end_point.x - start_point.x < 0) {
-                return true;
-            }
-        }
-        return false;
+    public boolean condition11(ArrayList<Point> points, Parameters_T parameters) {
+        return anySeparatedPair(points, parameters.G_PTS, (p1, p2) -> p2.x - p1.x < 0);
     }
 
-    public boolean condition12(ArrayList<Point> points, int NUMPOINTS, Parameters_T parameters) {
+    public boolean condition12(ArrayList<Point> points, Parameters_T parameters) {
         int interv_pts = parameters.K_PTS;
-        if (NUMPOINTS < 3) {
+        if (points.size() < 3) {
             return false;
         }
 
         boolean found_l1 = false;
         boolean found_l2 = false;
 
-        for (int i = interv_pts + 1; i < NUMPOINTS; i++) {
+        for (int i = interv_pts + 1; i < points.size(); i++) {
             Point start_point = points.get(i - interv_pts - 1);
             Point end_point = points.get(i);
             double distance = start_point.getDistance(end_point);

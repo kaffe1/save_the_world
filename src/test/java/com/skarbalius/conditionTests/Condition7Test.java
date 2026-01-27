@@ -20,9 +20,10 @@ public class Condition7Test
 
         Parameters_T params = new TestParameters();
         params.K_PTS = 1;
+        params.LENGTH1 = 3.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertTrue(conditions.condition7(points, 3, params, 3.0));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition7(points, params));
     }
 
     @Test
@@ -34,9 +35,10 @@ public class Condition7Test
 
         Parameters_T params = new TestParameters();
         params.K_PTS = 1;
+        params.LENGTH1 = 4.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertFalse(conditions.condition7(points, 3, params, 4.0));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition7(points, params));
     }
 
     @Test
@@ -48,9 +50,10 @@ public class Condition7Test
 
         Parameters_T params = new TestParameters();
         params.K_PTS = 1;
+        params.LENGTH1 = 5.0;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertFalse(conditions.condition7(points, 3, params, 5.0));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition7(points, params));
     }
 
     @Test
@@ -63,9 +66,10 @@ public class Condition7Test
 
         Parameters_T params = new TestParameters();
         params.K_PTS = 2;
+        params.LENGTH1 = 5.0;
 
-        Conditions conditions = new Conditions(points, 4, params);
-        assertTrue(conditions.condition7(points, 4, params, 5.0));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition7(points, params));
     }
 
     @Test
@@ -78,8 +82,9 @@ public class Condition7Test
 
         Parameters_T params = new TestParameters();
         params.K_PTS = 1;
+        params.LENGTH1 = 5.0;
 
-        Conditions conditions = new Conditions(points, 4, params);
-        assertFalse(conditions.condition7(points, 4, params, 5.0));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition7(points, params));
     }
 }

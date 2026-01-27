@@ -22,8 +22,8 @@ public class Condition11Test
         Parameters_T params = new TestParameters();
         params.G_PTS = 1;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertFalse(conditions.condition11(points, 3, params));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition11(points, params));
     }
 
     @Test
@@ -35,8 +35,8 @@ public class Condition11Test
         Parameters_T params = new TestParameters();
         params.G_PTS = 1;
 
-        Conditions conditions = new Conditions(points, 2, params);
-        assertFalse(conditions.condition11(points, 2, params));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition11(points, params));
     }
 
     @Test
@@ -49,8 +49,8 @@ public class Condition11Test
         Parameters_T params = new TestParameters();
         params.G_PTS = 1;
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertTrue(conditions.condition11(points, 3, params));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition11(points, params));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class Condition11Test
         Parameters_T params = new TestParameters();
         params.G_PTS = 2;
 
-        Conditions conditions = new Conditions(points, 4, params);
-        assertTrue(conditions.condition11(points, 4, params));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition11(points, params));
     }
 }

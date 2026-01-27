@@ -7,14 +7,31 @@ import java.util.function.Predicate;
 
 public class PointWindows
 {
+    static boolean anyConsecutivePair(List<Point> pts, BiPredicate<Point, Point> pred) {
+        for (int i = 1; i < pts.size(); i++) {
+            if (pred.test(pts.get(i - 1), pts.get(i))) return true;
+        }
+        return false;
+    }
+
+    public static boolean anySeparatedPair(List<Point> pts, int gap, BiPredicate<Point, Point> pred) {
+        int n = pts.size();
+        if (n < 3 || gap < 1 || gap > n - 2) return false;
+
+        for (int i = gap + 1; i < n; i++) {
+            if (pred.test(pts.get(i - gap - 1), pts.get(i))) return true;
+        }
+        return false;
+    }
+
     static boolean anyConsecutiveTriple(List<Point> pts, TriPredicate<Point, Point, Point> matchPred,
                                         TriPredicate<Point, Point, Point> skipPred) {
         for (int i = 2; i < pts.size(); i++) {
             Point v1 = pts.get(i - 2);
             Point v2 = pts.get(i - 1);
             Point v3 = pts.get(i);
-            if (skipPred.test(v1, v2, v3)) {continue;}
-            if (matchPred.test(v1, v2, v3)) {return true;}
+            if (skipPred.test(v1, v2, v3)) continue;
+            if (matchPred.test(v1, v2, v3)) return true;
         }
         return false;
     }
@@ -23,24 +40,18 @@ public class PointWindows
         return anyConsecutiveTriple(pts, pred, (a, b, c) -> false);
     }
 
-    static boolean anyConsecutivePair(List<Point> pts, BiPredicate<Point, Point> pred) {
-        for (int i = 1; i < pts.size(); i++) {
-            if (pred.test(pts.get(i - 1), pts.get(i))) {return true;}
-        }
-        return false;
-    }
 
     static boolean anySeparatedTriple(List<Point> pts, int gap1, int gap2, TriPredicate<Point, Point, Point> matchPred,
                                       TriPredicate<Point, Point, Point> skipPred) {
         int n = pts.size();
-        if (n < 5 || gap1 < 1 || gap2 < 1 || gap1 + gap2 > n - 3) {return false;}
+        if (n < 5 || gap1 < 1 || gap2 < 1 || gap1 + gap2 > n - 3) return false;
 
         for (int i = gap1 + gap2 + 2; i < n; i++) {
             Point v1 = pts.get(i - gap2 - gap1 - 2);
             Point v2 = pts.get(i - gap2 - 1);
             Point v3 = pts.get(i);
-            if (skipPred.test(v1, v2, v3)) {continue;}
-            if (matchPred.test(v1, v2, v3)) {return true;}
+            if (skipPred.test(v1, v2, v3)) continue;
+            if (matchPred.test(v1, v2, v3)) return true;
         }
         return false;
     }
@@ -51,7 +62,7 @@ public class PointWindows
 
     static List<Triple> separatedTriples(List<Point> pts, int aPts, int bPts) {
         int n = pts.size();
-        if (n < 5 || aPts < 1 || bPts < 1 || aPts + bPts > n - 3) {return List.of();}
+        if (n < 5 || aPts < 1 || bPts < 1 || aPts + bPts > n - 3) return List.of();
 
         List<Triple> out = new ArrayList<>();
         for (int i = aPts + bPts + 2; i < n; i++) {
@@ -63,9 +74,9 @@ public class PointWindows
     static <T> boolean existsBoth(Iterable<T> items, Predicate<T> pred1, Predicate<T> pred2) {
         boolean f1 = false, f2 = false;
         for (T t : items) {
-            if (!f1 && pred1.test(t)) {f1 = true;}
-            if (!f2 && pred2.test(t)) {f2 = true;}
-            if (f1 && f2) {return true;}
+            if (!f1 && pred1.test(t)) f1 = true;
+            if (!f2 && pred2.test(t)) f2 = true;
+            if (f1 && f2) return true;
         }
         return false;
     }

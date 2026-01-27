@@ -27,7 +27,7 @@ public class Condition13Test
         params.B_PTS = 1;
         params.RADIUS1 = 0.5;
         params.RADIUS2 = 10.0;
-        Conditions conditions = new Conditions(points, 5, params);
+        Conditions conditions = new Conditions(points, params);
         assertTrue(conditions.condition13(points, params));
     }
 
@@ -46,7 +46,7 @@ public class Condition13Test
         params.RADIUS1 = 0.5;
         params.RADIUS2 = 0.1; // Too small
 
-        Conditions conditions = new Conditions(points, 5, params);
+        Conditions conditions = new Conditions(points, params);
         assertFalse(conditions.condition13(points, params));
     }
 
@@ -64,7 +64,7 @@ public class Condition13Test
         params.RADIUS1 = 1.0;
         params.RADIUS2 = 10.0;
 
-        Conditions conditions = new Conditions(points, 4, params);
+        Conditions conditions = new Conditions(points, params);
         assertFalse(conditions.condition13(points, params));
     }
 }

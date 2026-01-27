@@ -21,10 +21,11 @@ public class Condition4Test
 
         Parameters_T params = new TestParameters();
         params.Q_PTS = 4;
+        params.QUADS = 3;
       
 
-        Conditions conditions = new Conditions(points, 4, params);
-        assertTrue(conditions.condition4(points, 4, params, 3));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition4(points, params));
     }
 
     @Test
@@ -37,10 +38,10 @@ public class Condition4Test
 
         Parameters_T params = new TestParameters();
         params.Q_PTS = 4;
+        params.QUADS = 2;
 
-
-        Conditions conditions = new Conditions(points, 4, params);
-        assertFalse(conditions.condition4(points, 4, params, 2));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition4(points, params));
     }
 
     @Test
@@ -53,9 +54,10 @@ public class Condition4Test
 
         Parameters_T params = new TestParameters();
         params.Q_PTS = 4;
+        params.QUADS = 3;
 
-        Conditions conditions = new Conditions(points, 4, params);
-        assertTrue(conditions.condition4(points, 4, params, 3));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition4(points, params));
     }
 
     @Test
@@ -69,10 +71,10 @@ public class Condition4Test
 
         Parameters_T params = new TestParameters();
         params.Q_PTS = 4;
+        params.QUADS = 2;
 
-
-        Conditions conditions = new Conditions(points, 5, params);
-        assertTrue(conditions.condition4(points, 5, params, 2));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition4(points, params));
     }
 
     @Test
@@ -85,10 +87,10 @@ public class Condition4Test
 
         Parameters_T params = new TestParameters();
         params.Q_PTS = 4;
+        params.QUADS = 1;
 
-
-        Conditions conditions = new Conditions(points, 4, params);
-        assertFalse(conditions.condition4(points, 4, params, 1));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition4(points, params));
     }
 
     @Test
@@ -99,9 +101,9 @@ public class Condition4Test
 
         Parameters_T params = new TestParameters();
         params.Q_PTS = 3;
+        params.QUADS = 1;
 
-
-        Conditions conditions = new Conditions(points, 2, params);
-        assertFalse(conditions.condition4(points, 2, params, 1));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition4(points, params));
     }
 }

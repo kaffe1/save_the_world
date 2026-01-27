@@ -26,8 +26,8 @@ public class Condition12Test
         params.LENGTH1 = 5.0f;   // 10 > 5
         params.LENGTH2 = 2.5f;   // 0.5 < 1
 
-        Conditions conditions = new Conditions(points, 5, params);
-        assertTrue(conditions.condition12(points, 5, params));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition12(points, params));
     }
 
     @Test
@@ -42,8 +42,8 @@ public class Condition12Test
         params.LENGTH1 = 5.0f;   // 10 > 5 ✓
         params.LENGTH2 = 0.5f;   // 10 < 0.5 ✗
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertFalse(conditions.condition12(points, 3, params));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition12(points, params));
     }
 
     @Test
@@ -58,8 +58,8 @@ public class Condition12Test
         params.LENGTH1 = 5.0f;   // 0.5 > 5 ✗
         params.LENGTH2 = 1.0f;   // 0.5 < 1 ✓
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertFalse(conditions.condition12(points, 3, params));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition12(points, params));
     }
 
     @Test
@@ -73,8 +73,8 @@ public class Condition12Test
         params.LENGTH1 = 5.0f;
         params.LENGTH2 = 15.0f;
 
-        Conditions conditions = new Conditions(points, 2, params);
-        assertFalse(conditions.condition12(points, 2, params));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition12(points, params));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class Condition12Test
         params.LENGTH1 = 2.0f;   // 3 > 2 ✓
         params.LENGTH2 = 5.0f;   // 3 < 5 ✓
 
-        Conditions conditions = new Conditions(points, 3, params);
-        assertTrue(conditions.condition12(points, 3, params));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition12(points, params));
     }
 }

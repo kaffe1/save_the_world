@@ -25,8 +25,8 @@ public class Condition8Test {
         params.B_PTS = 1;
         params.RADIUS1 = 2.0;
 
-        Conditions conditions = new Conditions(points, 5, params);
-        assertTrue(conditions.condition8(points, 5, params));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition8(points, params));
     }
 
     @Test
@@ -43,8 +43,8 @@ public class Condition8Test {
         params.B_PTS = 1;
         params.RADIUS1 = 2.0;
 
-        Conditions conditions = new Conditions(points, 5, params);
-        assertFalse(conditions.condition8(points, 5, params));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition8(points, params));
     }
 
     @Test
@@ -61,8 +61,8 @@ public class Condition8Test {
         params.B_PTS = 1;
         params.RADIUS1 = 1.0;
 
-        Conditions conditions = new Conditions(points, 5, params);
-        assertTrue(conditions.condition8(points, 5, params));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition8(points, params));
     }
 
     @Test
@@ -79,8 +79,8 @@ public class Condition8Test {
         params.B_PTS = 1;
         params.RADIUS1 = 3.0;
 
-        Conditions conditions = new Conditions(points, 5, params);
-        assertFalse(conditions.condition8(points, 5, params));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition8(points, params));
     }
 
     @Test
@@ -98,8 +98,8 @@ public class Condition8Test {
         params.B_PTS = 1;
         params.RADIUS1 = 2.0;
 
-        Conditions conditions = new Conditions(points, 6, params);
-        assertTrue(conditions.condition8(points, 6, params));
+        Conditions conditions = new Conditions(points, params);
+        assertTrue(conditions.condition8(points, params));
     }
 
     @Test
@@ -115,7 +115,7 @@ public class Condition8Test {
         params.B_PTS = 1;
         params.RADIUS1 = 1.0;
 
-        Conditions conditions = new Conditions(points, 4, params);
-        assertFalse(conditions.condition8(points, 4, params));
+        Conditions conditions = new Conditions(points, params);
+        assertFalse(conditions.condition8(points, params));
     }
 }

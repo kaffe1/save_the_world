@@ -20,7 +20,7 @@ public class Condition2Test
         points.add(new Point(2, 1)); // forms acute angle
 
         Parameters_T params = new TestParameters();
-        Conditions conditions = new Conditions(points, 3, params);
+        Conditions conditions = new Conditions(points, params);
 
         assertTrue(conditions.condition2(points, params));
     }
@@ -33,7 +33,7 @@ public class Condition2Test
         points.add(new Point(2, 0)); // collinear, angle = PI
 
         Parameters_T params = new TestParameters();
-        Conditions conditions = new Conditions(points, 3, params);
+        Conditions conditions = new Conditions(points, params);
 
         assertFalse(conditions.condition2(points, params));
     }

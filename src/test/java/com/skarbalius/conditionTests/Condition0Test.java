@@ -19,7 +19,7 @@ public class Condition0Test
         points.add(new Point(15, 0));
 
         Parameters_T params = new TestParameters();
-        Conditions conditions = new Conditions(points, 3, params);
+        Conditions conditions = new Conditions(points, params);
 
         assertTrue(conditions.condition0(points, params));
     }
@@ -32,7 +32,7 @@ public class Condition0Test
         points.add(new Point(4, 0)); // distance = 2
 
         Parameters_T params = new TestParameters();
-        Conditions conditions = new Conditions(points, 3, params);
+        Conditions conditions = new Conditions(points, params);
 
         assertFalse(conditions.condition0(points, params));
     }

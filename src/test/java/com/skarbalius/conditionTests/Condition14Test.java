@@ -28,7 +28,7 @@ public class Condition14Test
         params.AREA1 = 1.0;
         params.AREA2 = 10.0;
 
-        Conditions conditions = new Conditions(points, 5, params);
+        Conditions conditions = new Conditions(points, params);
         assertTrue(conditions.condition14(points, params));
     }
 
@@ -48,7 +48,7 @@ public class Condition14Test
         params.AREA2 = 0.1;  // Too small, no triangle can be less than this
 
 
-        Conditions conditions = new Conditions(points, 5, params);
+        Conditions conditions = new Conditions(points, params);
         assertFalse(conditions.condition14(points, params));
     }
 
@@ -67,7 +67,7 @@ public class Condition14Test
         params.AREA1 = 100.0;  // Too large, no triangle can be greater than this
         params.AREA2 = 10.0;
 
-        Conditions conditions = new Conditions(points, 5, params);
+        Conditions conditions = new Conditions(points, params);
         assertFalse(conditions.condition14(points, params));
     }
 
@@ -85,7 +85,7 @@ public class Condition14Test
         params.AREA1 = 1.0;
         params.AREA2 = 100.0;
 
-        Conditions conditions = new Conditions(points, 4, params);
+        Conditions conditions = new Conditions(points, params);
         assertFalse(conditions.condition14(points, params));
     }
 
@@ -104,7 +104,7 @@ public class Condition14Test
         params.AREA1 = 1.0;
         params.AREA2 = -1.0;
 
-        Conditions conditions = new Conditions(points, 5, params);
+        Conditions conditions = new Conditions(points, params);
         assertFalse(conditions.condition14(points, params));
     }
 
