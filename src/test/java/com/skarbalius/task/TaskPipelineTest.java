@@ -30,6 +30,12 @@ class TaskPipelineTest {
                 new Point(2, 2),
                 new Point(10, 4.5)  // Small triangle
         ));
+        context.lcm = new Vector<>(15);
+        for (int i = 0; i < 15; i++) {
+            Vector<BooleanOperator> row = new Vector<>(15);
+            for (int j = 0; j < 15; j++) row.add(BooleanOperator.NOTUSED);
+            context.lcm.add(row);
+        }
 
         TaskHandler cmvHandler = new CMVHandler();
         cmvHandler.handle(context);
@@ -93,6 +99,13 @@ class TaskPipelineTest {
         assertTrue(context.pum.get(3).get(4), "NOTUSED should always result in True");
         assertTrue(context.pum.get(4).get(3), "NOTUSED should always result in True");
 
+        // Verify Matrix Symmetry
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                assertEquals(context.pum.get(i).get(j), context.pum.get(j).get(i), "PUM must be symmetric at (" + i + "," + j + ")");
+            }
+        }
+
         // Verify Matrix Dimensions (15x15)
         assertEquals(15, context.pum.size());
         assertEquals(15, context.pum.get(0).size());
@@ -122,14 +135,7 @@ class TaskPipelineTest {
         context.lcm.get(2).set(0, BooleanOperator.NOTUSED);
 
         PUMHandler handler = new PUMHandler();
-        handler.handle(context);
-
-        // Verify Matrix Symmetry
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
-                assertEquals(context.pum.get(i).get(j), context.pum.get(j).get(i), "PUM must be symmetric at (" + i + "," + j + ")");
-            }
-        }
+        assertThrows(IllegalArgumentException.class, () -> handler.handle(context));
     }
 }
 
