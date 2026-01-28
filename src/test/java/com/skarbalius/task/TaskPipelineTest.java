@@ -50,6 +50,8 @@ class TaskPipelineTest {
         for (int i = 0; i < 15; i++) context.cmv.add(false); 
         context.cmv.set(0, true);
         context.cmv.set(1, false);
+        context.cmv.set(10, true);
+        context.cmv.set(11, true);
 
         // Mock LCM matrix 
         context.lcm = new Vector<>(15);
@@ -60,9 +62,15 @@ class TaskPipelineTest {
         }
 
         context.lcm.get(0).set(1, BooleanOperator.ANDD); 
-        context.lcm.get(1).set(0, BooleanOperator.ANDD); 
-        context.lcm.get(0).set(2, BooleanOperator.ORR);  
-        context.lcm.get(3).set(4, BooleanOperator.NOTUSED); 
+        context.lcm.get(1).set(0, BooleanOperator.ANDD);
+        context.lcm.get(0).set(2, BooleanOperator.ORR);
+        context.lcm.get(2).set(0, BooleanOperator.ORR);
+        context.lcm.get(3).set(4, BooleanOperator.NOTUSED);
+        context.lcm.get(4).set(3, BooleanOperator.NOTUSED);
+        context.lcm.get(8).set(9, BooleanOperator.ORR);
+        context.lcm.get(9).set(8, BooleanOperator.ORR);
+        context.lcm.get(10).set(11, BooleanOperator.ANDD);
+        context.lcm.get(11).set(10, BooleanOperator.ANDD);
 
         PUMHandler handler = new PUMHandler();
         handler.handle(context);
@@ -71,16 +79,20 @@ class TaskPipelineTest {
         
         // Verify ANDD logic
         assertFalse(context.pum.get(0).get(1), "True ANDD False should be False");
+        assertFalse(context.pum.get(1).get(0), "True ANDD False should be False");
+        assertTrue(context.pum.get(10).get(11), "True ANDD True should be True");
+        assertTrue(context.pum.get(11).get(10), "True ANDD True should be True");
         
         // Verify ORR logic
         assertTrue(context.pum.get(0).get(2), "True ORR False should be True");
+        assertTrue(context.pum.get(2).get(0), "True ORR False should be True");
+        assertFalse(context.pum.get(8).get(9), "False ORR False should be False");
+        assertFalse(context.pum.get(9).get(8), "False ORR False should be False");
         
         // Verify NOTUSED logic: must be True regardless of CMV values
         assertTrue(context.pum.get(3).get(4), "NOTUSED should always result in True");
-        
-        // Verify Matrix Symmetry 
-        assertEquals(context.pum.get(0).get(1), context.pum.get(1).get(0), "PUM must be symmetric"); 
-        
+        assertTrue(context.pum.get(4).get(3), "NOTUSED should always result in True");
+
         // Verify Matrix Dimensions (15x15)
         assertEquals(15, context.pum.size());
         assertEquals(15, context.pum.get(0).size());
