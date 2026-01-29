@@ -1,8 +1,30 @@
 # Save The World
-Implementation of DECIDE requirements specification for detecting and intercepting ballistic threats.
+This project is a Java implementation of the DECIDE assignment detecting and intercepting ballistic threats.
+
+## What the Project Does
+The DECIDE program evaluates tracking date and parameters to determine whether or not an interceptor launch should be authorized
+
+Given radar tracking points, parameters, and logical constraints, the program evaluates a set of Launch Interceptor Conditions as defined in the DECIDE manual. The conditions arelater used according to the Logical Connector Martix and Preliminary Unlocking Vector in order to know the relevant conditions. After this process, the program comes to a conclusion of whether or not to launch the interceptor.
+
+## License
+This peoject is licensed under the BSD 2-Clause License. See the License file for more information.
+
+
+## Statement of Contributions
+ 
+ Alberto Rayon: I participated as an observer in pair programming for the implementation of Launch Interceptor Conditions 0-2. I independently implemented LIC's 3 through 8 and wrote unit tests for each. After the conditions were met, I worked alongside Adrian on refactoring the LIC's.
+
+ Juozas Skarbalius: I set up the initial project structure, including Maven configuration, input parsing, and the README. I implemented core infrastructure components, including task handling logic, and contributed to refactoring as well as the implementation and testing of PUM and LCM functionality.
+
+ Adrian Grund: I implemented Launch Interceptor Conditions 0, 1, 9, 10, 11, 12, 13, and 14 and wrote unit tests for these conditions. I also led refactoring and cleanup efforts, reorganized condition-related files, improved test structure, and managed project merges.
+
+ Jintong Jang: I implemented the PUMHandler and its associated unit tests, contributing to the logic responsible for combining condition evaluations.
+
+
 
 ## Prerequisites
 - JDK 22 or higher installed
+- Maven installed
 
 ## Getting Started
 
