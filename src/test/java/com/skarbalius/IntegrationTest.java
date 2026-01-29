@@ -40,4 +40,36 @@ class IntegrationTest {
 
         assertTrue(result.decision());
     }
+
+    @Test
+    @DisplayName("Testcase 2: NO (minimal NUMPOINTS=2, forced NO via PUV+LCM ANDD)")
+    void testcase2() throws IOException {
+        DECIDE.execute(
+                new File(resourcesDirectory + "/testcase_2.json"),
+                new File(resourcesDirectory + "/output_testcase_2.json")
+        );
+
+        var result = objectMapper.readValue(new File(resourcesDirectory + "/output_testcase_2.json"), Output.class);
+        assertNotNull(result);
+        assertNotNull(result.cmv());
+
+        // With only 2 points:
+        // - LIC0 requires consecutive distance > LENGTH1 (false here: sqrt(2) <= 5)
+        // - LIC5 requires X[j]-X[i] < 0 for consecutive points (false here: 1-0 > 0)
+        // - LIC6/7/8/9/10/11/12/13/14 are not met due to NUMPOINTS constraints in the spec
+        assertFalse(result.cmv().get(0));
+        assertFalse(result.cmv().get(5));
+        assertFalse(result.cmv().get(6));
+        assertFalse(result.cmv().get(7));
+        assertFalse(result.cmv().get(8));
+        assertFalse(result.cmv().get(9));
+        assertFalse(result.cmv().get(10));
+        assertFalse(result.cmv().get(11));
+        assertFalse(result.cmv().get(12));
+        assertFalse(result.cmv().get(13));
+        assertFalse(result.cmv().get(14));
+
+        // PUV[0] is true, and LCM[0][1] is ANDD, so row 0 cannot be all true => LAUNCH must be false
+        assertFalse(result.decision());
+    }
 }
