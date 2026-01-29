@@ -8,7 +8,7 @@ Given radar tracking points, parameters, and logical constraints, the program ev
 
 ## Prerequisites
 - JDK 22 or higher installed
-- Maven
+- Maven (version 3.9.8) 
 
 ## Getting Started
 
