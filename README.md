@@ -38,7 +38,7 @@ This peoject is licensed under the BSD 2-Clause License. See the License file fo
 
  Juozas Skarbalius: Set up the initial project structure, including Maven configuration, input parsing, and the README. Implemented task handling logic, and contributed to refactoring as well as the implementation and testing of PUM and LCM functionality.
 
- Adrian Grund: Implemented Launch Interceptor Conditions 0, 1, 9, 10, 11, 12, 13, and 14 and wrote unit tests for these conditions. Contributed to refactoring and cleanup efforts, reorganized condition-related files, improved test structure, and managed project merges. Also completed the way of working assessment.
+ Adrian Grund: Implemented Launch Interceptor Conditions 0, 1, 2, 9, 10, 11, 12, 13, and 14 and wrote unit tests for these conditions. Contributed to refactoring and cleanup efforts, reorganized condition-related files, improved test structure, and managed project merges. Also completed the way of working assessment and integration tests 2 & 3.
 
  Jintong Jang: Implemented the PUMHandler and its associated unit tests, contributing to the logic responsible for combining condition evaluations.
 
