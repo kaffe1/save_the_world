@@ -43,4 +43,5 @@ This peoject is licensed under the BSD 2-Clause License. See the License file fo
  Jintong Jang: Implemented the PUMHandler and its associated unit tests, contributing to the logic responsible for combining condition evaluations.
 
 Bahar Kimanos: Added the FUV and final decision handler tests and its respective tests. Refactrored the FUV handler to make some fixes. 
-   ```
+
+Jintong Jiang: Worked on the implementation of the PUM as well as the refactoring.
